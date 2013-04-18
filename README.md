@@ -16,10 +16,10 @@ You will need to create a directory structure as follows:
 ```
     ├── bin
     └── src
-    └── contrib
-    ├── PACKAGES
-    └── Package_x.y.tar.gz
-    └── Package_x.y.zip
+      └── contrib
+      ├── PACKAGES
+      └── Package_x.y.tar.gz
+      └── Package_x.y.zip
 ```
 
 This works with both tar.gz and zip files and was tested with Python 2.6.
