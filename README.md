@@ -13,12 +13,14 @@ It locates the DESCRIPTION file in the package and writes this to the main PACKA
 
 You will need to create a directory structure as follows:
 
-├── bin
-└── src
-└── contrib
-├── PACKAGES
-└── Package_x.y.tar.gz
-└── Package_x.y.zip
+```
+    ├── bin
+    └── src
+    └── contrib
+    ├── PACKAGES
+    └── Package_x.y.tar.gz
+    └── Package_x.y.zip
+```
 
 This works with both tar.gz and zip files and was tested with Python 2.6.
 
