@@ -13,11 +13,9 @@ from os.path import isfile, join
 from itertools import imap
 
 #
-# Build PACKAGES file
+# Build PACKAGES file from tar.gz and zip R packages
 #
-
 path="."
-
 targzpart=".tar.gz"
 zippart=".zip"
 extensions=targzpart, zippart
