@@ -24,3 +24,6 @@ You will need to create a directory structure as follows:
 
 This works with both tar.gz and zip files and was tested with Python 2.6.
 
+For more help run:
+
+./buildpackages.py -h
