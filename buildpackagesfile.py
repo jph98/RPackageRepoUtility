@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
+import tarfile, zipfile, gzip
 import glob
-import tarfile
-import zipfile
 import re
 import os
 import shutil
 import StringIO
-import gzip
+from optparse import OptionParser
 
 from os import listdir
 from os.path import isfile, join
@@ -52,8 +51,7 @@ def append_to_packages(content):
 		f.write(content + "\n")		
 
 # Read the DESCRIPTION file from the archive
-def add_descriptions(filename):
-
+def add_description_from_file(filename):
 	if targzpart in filename:
 		content = read_file_in_targz(filename)	
 		append_to_packages(content)
@@ -70,11 +68,9 @@ def gzip_packages_file():
 	with open(packages_file, "rb") as f:
 		with gzip.open(packages_file + ".gz", "wb") as gzout:
 			gzout.writelines(f)			
-	
 
-# Main method
-if  __name__ =="__main__":
-
+# Build all the packages
+def build_all_packages():
 	# Backup old package file (if it exists)
 	if os.path.isfile(packages_file):
    		shutil.move(packages_file, packages_file + ".bk")	
@@ -82,6 +78,20 @@ if  __name__ =="__main__":
 	# Look for matching files in the current directory
 	files = [ f for f in listdir(path) if isfile(join(path,f)) and is_archive(f) ]
 	for f in files:
-		add_descriptions(f)
+		add_description_from_file(f)
 
-	gzip_packages_file()
+	gzip_packages_file()	
+# Main method
+if  __name__ =="__main__":
+
+	parser = OptionParser()	
+	parser.add_option("-b", action="store_true", dest="buildall", default=False, help="Build all packages")
+	parser.add_option("-a", dest="packagename", help="Append a packagename to PACKAGES (e.g. ggplot2_0.9.3.1.tar.gz)")
+	(options, args) = parser.parse_args()
+	
+	if options.buildall:
+		build_all_packages
+	elif options.packagename:		
+		add_description_from_file(options.packagename)
+	else:
+		print parser.print_help()
