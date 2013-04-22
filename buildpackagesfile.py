@@ -7,6 +7,7 @@ import os
 import shutil
 import StringIO
 from optparse import OptionParser
+from contextlib import closing
 
 from os import listdir
 from os.path import isfile, join
@@ -29,16 +30,16 @@ def get_description_name(filename):
 def read_file_in_targz(filename):
 
 	print "Processing gzip: " + filename
-	with tarfile.open(filename, "r:gz") as tar:		
+	with closing(tarfile.open(filename, "r:gz")) as tar:
 		descfile = get_description_name(filename)
-		content = tar.extractfile(descfile).read()		
+		content = tar.extractfile(descfile).read()
 		return content
 
 # Read a file from a zip archive
 def read_file_in_zip(filename):
 
 	print "Processing zip: " + filename
-	with zipfile.ZipFile(filename) as zfile:
+	with closing(zipfile.ZipFile(filename)) as zfile:
 		
 		descfile = get_description_name(filename)
 		doscontent = StringIO.StringIO(zfile.read(descfile)).getvalue()			
@@ -65,8 +66,8 @@ def is_archive(file):
 
 # Gzip the PACKAGES file
 def gzip_packages_file():	
-	with open(packages_file, "rb") as f:
-		with gzip.open(packages_file + ".gz", "wb") as gzout:
+	with closing(open(packages_file, "rb")) as f:
+		with closing(gzip.open(packages_file + ".gz", "wb")) as gzout:
 			gzout.writelines(f)			
 
 # Build all the packages
