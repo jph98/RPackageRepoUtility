@@ -27,3 +27,8 @@ This works with both tar.gz and zip files and was tested with Python 2.6.
 For more help run:
 
 ./buildpackages.py -h
+
+SwitchR
+=======
+
+Provides a utility to switch between different versions of R on RHEL Variants of Linux.
